@@ -1,3 +1,6 @@
+[![npm Version][npm-image]][npm-url]
+[![License][license-image]][license-url]
+
 ## jscc-brunch
 
 Adds conditional compilation and variable replacement support to [brunch](http://brunch.io).
@@ -107,3 +110,8 @@ You can read in the jscc Wiki about:
 The [MIT License](LICENCE) (MIT)
 
 Copyright (c) 2016 Alberto Martínez (https://github.com/aMarCruz)
+
+[npm-image]:      https://img.shields.io/npm/v/jscc-brunch.svg
+[npm-url]:        https://www.npmjs.com/package/jscc-brunch
+[license-image]:  https://img.shields.io/npm/l/express.svg
+[license-url]:    https://github.com/aMarCruz/jscc-brunch/blob/master/LICENSE
