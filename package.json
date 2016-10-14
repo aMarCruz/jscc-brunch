@@ -1,0 +1,39 @@
+{
+  "name": "jscc-brunch",
+  "version": "2.8.0",
+  "description": "Conditional compilation and variable replacement for Brunch",
+  "main": "index.js",
+  "scripts": {
+    "test": "eslint src"
+  },
+  "engines": {
+    "node": ">=4.0",
+    "npm": ">=3.0"
+  },
+  "keywords": [
+    "brunch",
+    "brunch-plugin",
+    "conditional",
+    "comments",
+    "compilation",
+    "javascript",
+    "es6",
+    "html5",
+    "preproccesor",
+    "stack",
+    "source map"
+  ],
+  "author": {
+    "name": "aMarCruz",
+    "email": "amarcruzbox-git@yahoo.com",
+    "url": "https://github.com/aMarCruz"
+  },
+  "license": "MIT",
+  "peerDependencies": {
+    "brunch": "2.x"
+  },
+  "dependencies": {
+    "anymatch": "^1.3.0",
+    "jscc": "^0.3.0"
+  }
+}
