@@ -16,11 +16,13 @@ With jscc, you have:
 
 \* This feature allows you the conditional declaration of ES6 imports (See the [example](#example)).
 
-**Note:**
-
 jscc is a preprocessor, please put it before compilers in the devDependencies of package.json (in brunch the **order matters**).
 
 jscc is **not** a minifier tool, it only does well that it does...
+
+**Note:**
+
+From v2.8.1 the default file type is `.js` that fixes an important issue, please upgrade.
 
 ## Example
 
@@ -72,7 +74,7 @@ Default is `/^(bower_components|vendor)/`.
 #### `pattern`
 
 Regular expression that matches the file paths you want to process.
-Default is all the files.
+Default is `.js` files.
 
 
 #### Example:
@@ -88,7 +90,7 @@ plugins: {
       /^(bower_components|vendor)\//,
       'app/someProblematicCode/**/*'
     ],
-    pattern: /\.(js|jsx|tag)$/ // limit to certain js files.
+    pattern: /\.(js|pug|tag)$/  // limit to certain js files.
   }
 }
 ```

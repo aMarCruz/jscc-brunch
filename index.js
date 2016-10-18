@@ -2,27 +2,23 @@
 
 const jscc = require('jscc')
 const anymatch = require('anymatch')
-
 const reIgnore = /^(?:bower_components|vendor)\//
-const reTypes  = /^(?:javascript|stylesheet|template)$/i
 
 function jsccProxy (file, options, cb) {
+  let res, err
 
-  let error = null
-  options.errorHandler = (message) => {
-    error = new Error(message)
-  }
-
-  const res = jscc(file.data, file.path, options)
-
-  delete options.errorHandler
-
-  if (error) {
-    cb(error, null)
-  } else {
-    if (res.map) file.map = res.map
-    file.data = typeof res.code == 'string' ? res.code : res
-    cb(null, file)
+  try {
+    res = jscc(file.data, file.path, options)
+  } catch (e) {
+    err = e
+  } finally {
+    if (err) {
+      cb(err, null)
+    } else {
+      if (res.map) file.map = res.map
+      file.data = typeof res.code == 'string' ? res.code : res
+      cb(null, file)
+    }
   }
 }
 
@@ -33,10 +29,10 @@ class JsccPlugin {
     const opts = config.plugins.jscc || (config.plugins.jscc = {})
 
     opts.sourceMap = !!config.sourceMaps && opts.sourceMap !== false
-    if (opts.type && reTypes.test(opts.type)) {
-      this.type = opts.type
+
+    if (opts.pattern) {
+      this.pattern = opts.pattern
     }
-    this.pattern = opts.pattern || /\S/
     this.ignored = anymatch(opts.ignore || reIgnore)
     this.options = opts
   }
@@ -64,5 +60,7 @@ class JsccPlugin {
 }
 
 JsccPlugin.prototype.brunchPlugin = true
+JsccPlugin.prototype.extension = '.js'
+JsccPlugin.prototype.type = 'javascript'
 
 module.exports = JsccPlugin
