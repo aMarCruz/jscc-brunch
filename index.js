@@ -1,35 +1,25 @@
 'use strict'
 
-const jscc = require('jscc')
-const anymatch = require('anymatch')
-const reIgnore = /^(?:bower_components|vendor)\//
+const anymatch  = require('anymatch')
+const jscc      = require('jscc')
+const flatten   = require('flatten-brunch-map')
 
-function jsccProxy (file, options, cb) {
-  let res, err
+const reIgnore  = /\b(?:bower_components|node_modules|vendor)\//
+const rePattern = /\.jsx?$/
 
-  try {
-    res = jscc(file.data, file.path, options)
-  } catch (e) {
-    err = e
-  } finally {
-    if (err) {
-      cb(err, null)
-    } else {
-      if (res.map) file.map = res.map
-      file.data = typeof res.code == 'string' ? res.code : res
-      cb(null, file)
-    }
-  }
-}
+const dup = (src) => Object.assign({}, src)
+
 
 class JsccPlugin {
 
   constructor (config) {
-    // 1. Build `pattern` from config
-    const opts = config.plugins.jscc || (config.plugins.jscc = {})
+    const opts = dup(config.plugins && config.plugins.jscc)
 
-    opts.sourceMap = !!config.sourceMaps && opts.sourceMap !== false
-
+    opts.sourceMap = !!config.sourceMaps &&
+       (opts.sourceMap === true || opts.sourceMaps === true)
+    if (opts.sourceMap) {
+      this.canGenMap = anymatch(opts.sourceMapFor || rePattern)
+    }
     if (opts.pattern) {
       this.pattern = opts.pattern
     }
@@ -37,30 +27,36 @@ class JsccPlugin {
     this.options = opts
   }
 
-  // On-the-fly compilation.
   compile (file) {
 
     if (this.ignored(file.path)) {
       return Promise.resolve(file)
     }
 
-    return new Promise((resolve, reject) => {
+    try {
+      const opts = dup(this.options)
 
-      process.nextTick(jsccProxy,
-        file, this.options, (err, res) => {
-          if (err) {
-            reject(err)
-          } else {
-            resolve(res)
-          }
-        })
+      opts.sourceMap = opts.sourceMap && this.canGenMap(file.path)
+      if (!opts.sourceMap) {
+        opts.keepLines = true
+      }
 
-    })
+      const output = jscc(file.data, file.path, opts)
+
+      if (output.map) {
+        output.map.file = file.path
+      }
+      return Promise.resolve(flatten(file, output.code, output.map))
+
+    } catch (err) {
+      return Promise.reject(err)
+    }
   }
+
 }
 
 JsccPlugin.prototype.brunchPlugin = true
-JsccPlugin.prototype.extension = '.js'
+JsccPlugin.prototype.pattern = rePattern
 JsccPlugin.prototype.type = 'javascript'
 
 module.exports = JsccPlugin

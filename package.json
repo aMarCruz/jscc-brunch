@@ -1,6 +1,6 @@
 {
   "name": "jscc-brunch",
-  "version": "2.8.1",
+  "version": "2.8.2",
   "description": "Conditional compilation and variable replacement for Brunch",
   "main": "index.js",
   "scripts": {
@@ -23,17 +23,21 @@
     "stack",
     "source map"
   ],
+  "homepage": "https://github.com/aMarCruz/jscc-brunch",
+  "bugs": "https://github.com/aMarCruz/jscc-brunch/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aMarCruz/jscc-brunch.git"
+  },
   "author": {
     "name": "aMarCruz",
     "email": "amarcruzbox-git@yahoo.com",
     "url": "https://github.com/aMarCruz"
   },
   "license": "MIT",
-  "peerDependencies": {
-    "brunch": "2.x"
-  },
   "dependencies": {
     "anymatch": "^1.3.0",
-    "jscc": "^0.3.0"
+    "flatten-brunch-map": "^2.8.0",
+    "jscc": "^0.3.3"
   }
 }

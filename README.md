@@ -5,24 +5,22 @@
 
 Adds conditional compilation and variable replacement support to [brunch](http://brunch.io).
 
-Featuring some of the C preprocessor characteristics through special, configurable comments, jscc can be used in any type of files to build multiple versions of your software from the same code base.
+Featuring some of the C preprocessor characteristics through special, configurable comments, [jscc](https://github.com/aMarCruz/jscc) can be used in almost any type of files to build multiple versions of your software from the same code base.
 
 With jscc, you have:
 
-* Conditional inclusion/exclusion of code, based on compile-time variables*
+* Conditional inclusion/exclusion of code, based on compile-time variables
 * Compile-time variables with all the power of JavaScript expressions
 * Replacement of variables inside the source (by value at compile-time)
 * Source Map support
 
-\* This feature allows you the conditional declaration of ES6 imports (See the [example](#example)).
-
-jscc is a preprocessor, please put it before compilers in the devDependencies of package.json (in brunch the **order matters**).
-
 jscc is **not** a minifier tool, it only does well that it does...
 
-**Note:**
+**IMPORTANT:**
 
-From v2.8.1 the default file type is `.js` that fixes an important issue, please upgrade.
+From v2.8.3 the generation of source map is disabled by default, to fix issues with the behavior of many plugins that does not supports chained source maps. However, jscc will maintain the correct line numbers.
+
+Please read more about this in [Using Source Maps](#using-source-maps).
 
 ## Example
 
@@ -33,18 +31,32 @@ or, do manual install:
 * Add `"jscc-brunch": "~x.y.z"` to `package.json` of your brunch app.
 * If you want to use git version of plugin, use the GitHub URI `"jscc-brunch": "aMarCruz/jscc-brunch"`.
 
-and use it:
+In brunch **the order matters**, jscc is a preprocessor so please put it before compilers in the devDependencies of your `package.json`.
+
+Set the options in your `brunch-config` file:
 
 ```js
-//#set _DEBUG 1
+  ...
+  plugins: {
+    jscc: {
+      values: {
+        _DEBUG: 1,
+        _MYAPP: 'My App' }
+    }
+  }
+  ...
+```
 
+Use it:
+
+```js
 /*#if _DEBUG
 import mylib from 'mylib-debug';
 //#else */
 import mylib from 'mylib';
 //#endif
 
-mylib.log('Starting v$_VERSION...');
+mylib.log('Starting $_MYAPP v$_VERSION...');
 ```
 
 output:
@@ -52,12 +64,34 @@ output:
 ```js
 import mylib from 'mylib-debug';
 
-mylib.log('Starting v1.0.0...');
+mylib.log('Starting My App v1.0.0...');
 ```
 
 That's it.
 
-\* From v0.2.1, jscc has the predefined `_VERSION` varname, in addition to `_FILE`.
+
+## Using Source Maps
+
+You can enable the generation of sourcemap if your are not using compilers or your compiler can merge sourcemaps* (a future release of buble-brunch will support that):
+
+```js
+  ...
+  plugins: {
+    jscc: {
+      sourceMaps: true,        // enable sourcemap generation in jscc
+      sourceMapFor: /\.js$/,   // allows sourcemap for .js files only
+      values: {
+        _DEBUG: 1,
+        _MYAPP: 'My App'
+      }
+    }
+  }
+  ...
+```
+
+Even with `sourceMaps: true`, sourcemap generation is limited to `.js` and `.jsx` files. You can change this with [anymatchs](https://github.com/es128/anymatch) through the `sourceMapFor` option.
+
+\* The jscc plugin does support merging sourcemaps.
 
 
 ## Options
@@ -74,7 +108,7 @@ Default is `/^(bower_components|vendor)/`.
 #### `pattern`
 
 Regular expression that matches the file paths you want to process.
-Default is `.js` files.
+Default is `/\.js$/` for JavaScript files.
 
 
 #### Example:
@@ -105,6 +139,10 @@ You can read in the jscc Wiki about:
 - [Keywords](https://github.com/aMarCruz/jscc/wiki/Keywords)
 - [Examples & Tricks](https://github.com/aMarCruz/jscc/wiki/Examples)
 
+
+## What's New
+
+- Using jscc v0.3.2
 
 
 ## License
