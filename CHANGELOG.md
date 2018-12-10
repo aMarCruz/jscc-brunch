@@ -6,6 +6,7 @@
 
 - Update metada and eslint.
 - Update Changelog format.
+- Update dependencies.
 
 ## \[2.8.2] - 2016-10-18
 
