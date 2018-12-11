@@ -41,6 +41,7 @@
     "jscc": "^1.1.0"
   },
   "devDependencies": {
+    "@jsbits/deep-clone": "^1.1.0",
     "eslint": "^5.10.0"
   }
 }

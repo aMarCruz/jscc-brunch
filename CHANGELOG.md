@@ -2,6 +2,10 @@
 
 ## \[Unreleased]
 
+### Added
+
+- @jsbits/deep-clone.
+
 ### Changed
 
 - Update metada and eslint.
