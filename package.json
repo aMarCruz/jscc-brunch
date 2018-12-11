@@ -2,7 +2,7 @@
   "name": "jscc-brunch",
   "version": "2.10.0",
   "description": "Conditional compilation and variable replacement for Brunch",
-  "main": "index.js",
+  "main": "./index.js",
   "scripts": {
     "pretest": "eslint index.js",
     "test": "mocha"

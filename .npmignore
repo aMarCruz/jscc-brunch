@@ -1,0 +1,5 @@
+*.json
+*.lock
+.vscode/
+test/
+node_modules/
