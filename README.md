@@ -17,7 +17,7 @@ With jscc, you have:
 
 **IMPORTANT:**
 
-From v2.8.3 the generation of source map is disabled by default, to fix issues with the behavior of many plugins that does not supports chained source maps. However, jscc will maintain the correct line numbers.
+From v2.8.3, the generation of source map is disabled by default to solve issues with many plugins that does not supports chained source maps. With sourceMaps disabled, jscc will only keep the correct line numbers.
 
 Please read more about this in [Using Source Maps](#using-source-maps).
 

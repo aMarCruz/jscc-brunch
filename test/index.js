@@ -5,8 +5,8 @@ const expect = require('expect.js')
 
 describe('Plugin', function () {
 
-  // eslint-disable-next-line no-var
-  var options = {}
+  /** @type {Plugin.BrunchConf} */
+  var options = {} // eslint-disable-line no-var
 
   beforeEach(function () {
     options = {

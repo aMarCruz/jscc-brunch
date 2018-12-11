@@ -7,6 +7,7 @@
 - @jsbits/deep-clone.
 - Simple test with mocha and expect.js
 - Brunch 2.10.0 in peerDependencies.
+- TypeScript typings.
 
 ### Changed
 

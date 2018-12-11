@@ -1,14 +1,14 @@
 {
   "name": "jscc-brunch",
   "version": "2.10.0",
-  "description": "Conditional compilation and variable replacement for Brunch",
+  "description": "Conditional compilation and compile-time variable replacement for brunch",
   "main": "./index.js",
   "scripts": {
-    "pretest": "eslint index.js",
+    "pretest": "eslint index.js test/*.js",
     "test": "mocha"
   },
   "engines": {
-    "node": ">=4.0",
+    "node": ">=4.2",
     "npm": ">=3.0"
   },
   "keywords": [
@@ -18,9 +18,10 @@
     "comments",
     "compilation",
     "javascript",
+    "typescript",
     "es6",
     "html5",
-    "preproccesor",
+    "preprocessor",
     "stack",
     "source map"
   ],
@@ -37,12 +38,12 @@
   },
   "license": "MIT",
   "dependencies": {
+    "@jsbits/deep-clone": "^1.1.0",
     "anymatch": "^2.0.0",
     "flatten-brunch-map": "^2.8.0",
     "jscc": "^1.1.0"
   },
   "devDependencies": {
-    "@jsbits/deep-clone": "^1.1.0",
     "eslint": "^5.10.0",
     "expect.js": "^0.3.1",
     "mocha": "^5.2.0"
