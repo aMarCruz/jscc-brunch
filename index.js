@@ -1,22 +1,35 @@
 'use strict'
 
 const anymatch  = require('anymatch')
+const deepClone = require('@jslib/deep-clone')
 const jscc      = require('jscc')
 const flatten   = require('flatten-brunch-map')
 
 const reIgnore  = /\b(?:bower_components|node_modules|vendor)\//
-const rePattern = /\.jsx?$/
+const rePattern = /\.(?:js|ts)x?$/
 
-const dup = (src) => Object.assign({}, src)
+const hasProp   = Object.prototype.hasOwnProperty
 
+const parseOptions = (config) => {
+  const opts = deepClone(config.plugins && config.plugins.jscc || {})
+
+  opts.sourceMap = !!config.sourceMaps &&
+    (opts.sourceMap === true || opts.sourceMaps === true)
+
+  if (!hasProp.call(opts, 'keepLines')) {
+    opts.keepLines = true
+  }
+  if (!hasProp.call(opts, 'prefixes')) {
+    opts.prefixes = /(?:\/[/*]|<!--) ?/
+  }
+  return opts
+}
 
 class JsccPlugin {
 
   constructor (config) {
-    const opts = dup(config.plugins && config.plugins.jscc)
+    const opts = parseOptions(config)
 
-    opts.sourceMap = !!config.sourceMaps &&
-       (opts.sourceMap === true || opts.sourceMaps === true)
     if (opts.sourceMap) {
       this.canGenMap = anymatch(opts.sourceMapFor || rePattern)
     }
@@ -34,12 +47,9 @@ class JsccPlugin {
     }
 
     try {
-      const opts = dup(this.options)
+      const opts = deepClone(this.options)
 
       opts.sourceMap = opts.sourceMap && this.canGenMap(file.path)
-      if (!opts.sourceMap) {
-        opts.keepLines = true
-      }
 
       const output = jscc(file.data, file.path, opts)
 
