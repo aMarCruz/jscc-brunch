@@ -1,11 +1,12 @@
 # Changes to jscc-brunch
 
-## \[Unreleased]
+## \[2.8.10] - 2018-12-10
 
 ### Added
 
 - @jsbits/deep-clone.
-- Simple mocha test.
+- Simple test with mocha and expect.js
+- Brunch 2.10.0 in peerDependencies.
 
 ### Changed
 
