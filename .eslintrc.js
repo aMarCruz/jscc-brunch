@@ -152,7 +152,9 @@ module.exports = {
       rules: {
         'no-console': OFF,
         'max-len': OFF,
+        'max-lines': OFF,
         'max-lines-per-function': OFF,
+        'max-statements': OFF,
       },
     },
   ],

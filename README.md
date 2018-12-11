@@ -85,7 +85,7 @@ prefixes     | string &vert; RegExp &vert;<br>Array&lt;string&vert;RegExp&gt; | 
 values       | object          | Plain object defining the variables used by jscc at compile-time.
 ignore       | [anymatch][1] | Specify which files in your project should not be processed.<br>**Default** `/^(bower_components|node_modules|vendor)\//`
 pattern      | RegExp        | Regular expression that matches the file paths you want to process.<br>**Default** `/\.(js|ts)x?$/`
-sourceMap    | boolean       | Enable the generation of sourcemap (if `sourceMaps:true` in your brunch config).<br>**Default** `false`
+sourceMaps   | boolean       | Enable the generation of sourcemap (if `sourceMaps:true` in your brunch config).<br>**Default** `false`
 sourceMapFor | [anymatch][1] | Files for which sourcemap must be generated if `sourceMaps:true`.<br>**Default** JavaScript/TypeScript files.
 
 ## Using Source Maps

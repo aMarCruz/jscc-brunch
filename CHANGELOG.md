@@ -5,6 +5,7 @@
 ### Added
 
 - @jsbits/deep-clone.
+- Simple mocha test.
 
 ### Changed
 

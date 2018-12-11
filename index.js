@@ -1,7 +1,7 @@
 'use strict'
 
 const anymatch  = require('anymatch')
-const deepClone = require('@jslib/deep-clone')
+const deepClone = require('@jsbits/deep-clone')
 const jscc      = require('jscc')
 const flatten   = require('flatten-brunch-map')
 
@@ -28,7 +28,7 @@ const parseOptions = (config) => {
 class JsccPlugin {
 
   constructor (config) {
-    const opts = parseOptions(config)
+    const opts = parseOptions(config || {})
 
     if (opts.sourceMap) {
       this.canGenMap = anymatch(opts.sourceMapFor || rePattern)
@@ -46,7 +46,7 @@ class JsccPlugin {
       return Promise.resolve(file)
     }
 
-    try {
+    return new Promise((resolve) => {
       const opts = deepClone(this.options)
 
       opts.sourceMap = opts.sourceMap && this.canGenMap(file.path)
@@ -56,11 +56,9 @@ class JsccPlugin {
       if (output.map) {
         output.map.file = file.path
       }
-      return Promise.resolve(flatten(file, output.code, output.map))
 
-    } catch (err) {
-      return Promise.reject(err)
-    }
+      resolve(flatten(file, output.code, output.map))
+    })
   }
 
 }
